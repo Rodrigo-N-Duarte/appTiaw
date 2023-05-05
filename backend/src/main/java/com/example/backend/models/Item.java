@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,7 +19,7 @@ public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private Long id;
+    private Long id_item;
     @Column
     private String nome;
     @Column
@@ -24,4 +27,9 @@ public class Item implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_cardapio")
     private Cardapio cardapio;
+    @ManyToMany
+    @JoinTable(name = "tb_item_pedido",
+            joinColumns = @JoinColumn(name = "item_fk"),
+            inverseJoinColumns = @JoinColumn(name = "pedido_fk"))
+    private List<Pedido> pedidos = new ArrayList<>();
 }
