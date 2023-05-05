@@ -1,14 +1,15 @@
 <template>
+<div>
   <v-row style="margin-top: 10px">
     <v-col cols="2"></v-col>
     <v-col cols="8">
       <v-row>
         <v-col cols="8">
           <v-text-field
-            v-model="search"
-            label="Search"
-            single-line
-            hide-details
+              v-model="search"
+              label="Search"
+              single-line
+              hide-details
           >
           </v-text-field>
         </v-col>
@@ -24,6 +25,7 @@
       <FoodCard></FoodCard>
     </v-col>
   </v-row>
+</div>
 </template>
 
 <script>
