@@ -14,7 +14,7 @@ Backend:
 $ run with debug
 ```
 
-Frontend:
+Frontend no terminal dentro da pasta:
 
 ```
 $ npm install
