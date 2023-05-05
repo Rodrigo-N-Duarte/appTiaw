@@ -1,8 +1,22 @@
-Frontend: 
+# Application TIAW 3 Período PUC Minas
 
-npm install
-npm run serve - para rodar o projeto no localhost
+### Prerequisites
 
-Backend: 
+* IDE
 
-Aperte - run with debug - na IDE para rodar a API
+### Installation
+
+Primeiro execute o backend para evitar erros
+
+Backend:
+
+```
+$ run with debug
+```
+
+Frontend:
+
+```
+$ npm install
+$ npm run serve
+```
