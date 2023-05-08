@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/cadastrar")
     public void cadastraUsuario(@RequestBody Usuario usuario){
         usuarioService.cadastraUsuario(usuario);
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/buscar/{id}")
     public UsuarioDTO buscaPorId(@PathVariable("id") Long id){
         return usuarioService.buscaUsuarioPorId(id);

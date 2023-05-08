@@ -23,11 +23,6 @@
                     <v-card-text>
                       <div class="mx-auto text-center">
                         <h3>{{ user.fullName }}</h3>
-                        <p class="text-caption mt-1">
-                          {{ user.email }}
-                        </p>
-                        <v-divider class="my-3"></v-divider>
-                        <v-btn rounded variant="text"> Edit Account </v-btn>
                         <v-divider class="my-3"></v-divider>
                         <v-btn rounded variant="text"> Disconnect </v-btn>
                       </div>
@@ -84,9 +79,8 @@ export default {
     return {
       theme: "mdi-weather-sunny",
       user: {
-        initials: "JD",
-        fullName: "John Doe",
-        email: "john.doe@doe.com",
+        initials: null,
+        fullName: null,
       },
       icons: [
         {
@@ -125,13 +119,25 @@ export default {
           value: "sobre",
           href: "/about",
         },
+          {
+              type: "mdi-lock",
+              name: "Login",
+              value: "login",
+              href: "/sign",
+          },
       ],
     };
   },
   methods: {
-    changeTheme() {
+      async changeTheme() {
       if (this.theme == "mdi-weather-sunny") this.theme = "mdi-weather-night";
       else this.theme = "mdi-weather-sunny";
+
+      let res = await fetch("http://localhost:8080/usuario/buscar/1");
+      let data = await res.json();
+      console.log(data);
+      this.user.initials = data.nome[0];
+      this.user.fullName = data.nome;
     },
   },
 };
