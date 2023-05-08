@@ -50,6 +50,9 @@ export default defineComponent({
       this.empresas = data
     },
     async buscarEmpresasPorNome(){
+        if (!this.pesquisa){
+            return
+        }
       let url = `http://localhost:8080/empresa/buscar-por-nome/${this.pesquisa}`
       let response = await fetch(url)
       let data = await response.json();

@@ -140,8 +140,9 @@ export default {
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((res) => {
-        console.log(res)
+      }).then(() => {
+        alert("Avaliação feita com sucesso")
+          this.dialog = !this.dialog
       })
     }
   },

@@ -57,7 +57,14 @@
                     <v-col cols="10">
                         <v-card class="mx-auto">
                             <v-toolbar color="transparent" class="px-0">
-                                <v-toolbar-title>Escolha como deseja se cadastrar:</v-toolbar-title>
+                                <v-toolbar-title>
+                                    Escolha como deseja se cadastrar:
+                                    <div>
+                                        <span style="font-size: 12px; color: gray">
+                                            Versão Beta: a segurança do site não está completa, recomendamos que coloque uma senha que não seja vinculada a outras plataformas.
+                                        </span>
+                                    </div>
+                                </v-toolbar-title>
                                 <template v-slot:extension>
                                     <v-tabs
                                             v-model="tabs"
