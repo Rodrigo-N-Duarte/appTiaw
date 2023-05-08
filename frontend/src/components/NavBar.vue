@@ -10,7 +10,7 @@
         <v-col>
           <v-card class="card-profile">
             <v-row>
-              <v-col cols="4">
+              <v-col cols="5">
                 <v-menu>
                   <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props">
@@ -30,7 +30,7 @@
                   </v-card>
                 </v-menu>
               </v-col>
-              <v-col cols="8">
+              <v-col cols="7">
                 <span>{{ user.fullName }}</span>
                 <p style="font-size: 10px">
                   Clique no ícone para mais informações
@@ -43,19 +43,17 @@
 
       <v-divider></v-divider>
 
-      <v-row style="margin-top: 20px; margin-bottom: 20px">
         <v-list density="compact" nav>
-          <v-list-item
-            v-for="(icon, index) in icons"
-            :prepend-icon="icon.type"
-            :title="icon.name"
-            :value="icon.value"
-            :class="icon.value"
-            :href="icon.href"
-            :key="index"
-          ></v-list-item>
+            <v-list-item
+                    v-for="(icon, index) in icons"
+                    :prepend-icon="icon.type"
+                    :title="icon.name"
+                    :value="icon.value"
+                    :class="icon.value"
+                    :href="icon.href"
+                    :key="index"
+            ></v-list-item>
         </v-list>
-      </v-row>
 
       <v-divider></v-divider>
 
@@ -90,28 +88,10 @@ export default {
           href: "/",
         },
         {
-          type: "mdi-magnify",
-          name: "Buscar",
-          value: "buscar",
-          href: "/buscar",
-        },
-        {
-          type: "mdi-star",
-          name: "Favoritos",
-          value: "favoritos",
-          href: "/favorites",
-        },
-        {
           type: "mdi-order-bool-descending",
           name: "Pedidos",
           value: "pedidos",
           href: "/pedidos",
-        },
-        {
-          type: "mdi-domain",
-          name: "Restaurantes",
-          value: "restaurantes",
-          href: "/locals",
         },
         {
           type: "mdi-message-bulleted",
