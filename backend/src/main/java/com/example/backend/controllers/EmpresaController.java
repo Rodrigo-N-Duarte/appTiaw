@@ -19,6 +19,16 @@ public class EmpresaController {
         return empresaService.buscarEmpresas();
     }
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/buscar-por-nome/{nome}")
+    public List<EmpresaDTO> buscarEmpresas(@PathVariable("nome") String nome){
+        return empresaService.buscarEmpresaPorNome(nome);
+    }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/buscar/{id}")
+    public EmpresaDTO buscarEmpresas(@PathVariable("id") Long id){
+        return empresaService.buscarEmpresaPorId(id);
+    }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/cadastrar")
     public String cadastrarEmpresa(@RequestBody Empresa empresa){
         return empresaService.cadastrarEmpresa(empresa);

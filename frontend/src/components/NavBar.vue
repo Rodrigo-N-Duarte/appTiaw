@@ -24,7 +24,7 @@
                       <div class="mx-auto text-center">
                         <h3>{{ user.fullName }}</h3>
                         <v-divider class="my-3"></v-divider>
-                        <v-btn rounded variant="text"> Disconnect </v-btn>
+                        <v-btn rounded variant="text"> Disconnect</v-btn>
                       </div>
                     </v-card-text>
                   </v-card>
@@ -46,13 +46,13 @@
       <v-row style="margin-top: 20px; margin-bottom: 20px">
         <v-list density="compact" nav>
           <v-list-item
-            v-for="(icon, index) in icons"
-            :prepend-icon="icon.type"
-            :title="icon.name"
-            :value="icon.value"
-            :class="icon.value"
-            :href="icon.href"
-            :key="index"
+              v-for="(icon, index) in icons"
+              :prepend-icon="icon.type"
+              :title="icon.name"
+              :value="icon.value"
+              :class="icon.value"
+              :href="icon.href"
+              :key="index"
           ></v-list-item>
         </v-list>
       </v-row>
@@ -62,9 +62,9 @@
       <v-container>
         <v-row justify="start">
           <v-btn
-            :icon="theme"
-            @click="this.changeTheme"
-            variant="default"
+              :icon="theme"
+              @click="this.changeTheme"
+              variant="default"
           ></v-btn>
         </v-row>
       </v-container>
@@ -101,17 +101,17 @@ export default {
           value: "sobre",
           href: "/about",
         },
-          {
-              type: "mdi-lock",
-              name: "Login",
-              value: "login",
-              href: "/sign",
-          },
+        {
+          type: "mdi-lock",
+          name: "Login",
+          value: "login",
+          href: "/sign",
+        },
       ],
     };
   },
   methods: {
-      async changeTheme() {
+    async changeTheme() {
       if (this.theme == "mdi-weather-sunny") this.theme = "mdi-weather-night";
       else this.theme = "mdi-weather-sunny";
 

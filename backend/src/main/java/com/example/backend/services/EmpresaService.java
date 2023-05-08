@@ -34,6 +34,37 @@ public class EmpresaService {
         });
         return empresasDTO;
     }
+    public List<EmpresaDTO> buscarEmpresaPorNome(String nome){
+        List<Empresa> empresas = empresaRepository.buscarEmpresaPorNome(nome);
+        List<EmpresaDTO> empresasDTO = new ArrayList<>();
+
+        empresas.forEach(empresa -> {
+            EmpresaDTO dto = new EmpresaDTO();
+            dto.setId(empresa.getId());
+            dto.setNome(empresa.getNome());
+            dto.setEmail(empresa.getEmail());
+            dto.setCnpj(empresa.getCnpj());
+            dto.setLocal(empresa.getLocal());
+            dto.setTelefone(empresa.getTelefone());
+            dto.setAvaliacao(empresa.getAvaliacao());
+
+            empresasDTO.add(dto);
+        });
+        return empresasDTO;
+    }
+    public EmpresaDTO buscarEmpresaPorId(Long id){
+        EmpresaDTO dto = new EmpresaDTO();
+        Empresa empresa = empresaRepository.findById(id).get();
+        dto.setId(empresa.getId());
+        dto.setNome(empresa.getNome());
+        dto.setEmail(empresa.getEmail());
+        dto.setCnpj(empresa.getCnpj());
+        dto.setLocal(empresa.getLocal());
+        dto.setTelefone(empresa.getTelefone());
+        dto.setAvaliacao(empresa.getAvaliacao());
+
+        return dto;
+    }
     public String cadastrarEmpresa(Empresa empresa){
         if (empresaRepository.emailJaExiste(empresa.getEmail()) != null){
             return "Email já existe";

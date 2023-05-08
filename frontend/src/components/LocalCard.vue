@@ -63,9 +63,7 @@ export default {
 
   methods: {
     verPaginaEmpresa() {
-      this.loading = true;
-
-      setTimeout(() => (this.loading = false), 2000);
+      this.$router.push(`/local/${this.empresa.id}`)
     },
   },
 };
