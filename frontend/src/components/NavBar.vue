@@ -90,28 +90,10 @@ export default {
           href: "/",
         },
         {
-          type: "mdi-magnify",
-          name: "Buscar",
-          value: "buscar",
-          href: "/buscar",
-        },
-        {
-          type: "mdi-star",
-          name: "Favoritos",
-          value: "favoritos",
-          href: "/favorites",
-        },
-        {
           type: "mdi-order-bool-descending",
           name: "Pedidos",
           value: "pedidos",
           href: "/pedidos",
-        },
-        {
-          type: "mdi-domain",
-          name: "Restaurantes",
-          value: "restaurantes",
-          href: "/locals",
         },
         {
           type: "mdi-message-bulleted",

@@ -2,9 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
 import SignView from "../views/SignView.vue";
-import LocalsView from "../views/LocalsView.vue";
-import SearchView from "../views/SearchView.vue";
-import FavoritesView from "../views/FavoritesView.vue";
 
 const routes = [
   {
@@ -13,24 +10,9 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/buscar",
-    name: "buscar",
-    component: SearchView,
-  },
-  {
-    path: "/favorites",
-    name: "favorites",
-    component: FavoritesView,
-  },
-  {
     path: "/pedidos",
     name: "pedidos",
     component: SignView,
-  },
-  {
-    path: "/locals",
-    name: "locals",
-    component: LocalsView,
   },
   {
     path: "/about",
