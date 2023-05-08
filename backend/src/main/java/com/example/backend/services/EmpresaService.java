@@ -34,7 +34,10 @@ public class EmpresaService {
         });
         return empresasDTO;
     }
-    public void cadastrarEmpresa(Empresa empresa){
+    public String cadastrarEmpresa(Empresa empresa){
+        if (empresaRepository.emailJaExiste(empresa.getEmail()) != null){
+            return "Email já existe";
+        }
         Empresa nova = new Empresa();
         nova.setNome(empresa.getNome());
         nova.setEmail(empresa.getEmail());
@@ -45,6 +48,7 @@ public class EmpresaService {
         nova.setAvaliacao(empresa.getAvaliacao());
 
         empresaRepository.save(nova);
+        return "Empresa cadastrada com sucesso!";
     }
 
     public void alterarAvaliacao(Long id, Double avaliacao){

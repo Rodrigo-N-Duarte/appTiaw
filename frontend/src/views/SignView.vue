@@ -33,6 +33,7 @@
                                             <v-btn
                                                     color="success"
                                                     class="mt-4"
+                                                    @click="fazerLogin"
                                                     block
                                             >
                                                 Login
@@ -106,6 +107,7 @@
                                                         <v-btn
                                                                 color="success"
                                                                 class="mt-4"
+                                                                @click="cadastraUsuario"
                                                                 block
                                                         >
                                                             Cadastrar
@@ -164,6 +166,7 @@
                                                         <v-btn
                                                                 color="success"
                                                                 class="mt-4"
+                                                                @click="cadastraEmpresa"
                                                                 block
                                                         >
                                                             Cadastrar
@@ -209,10 +212,93 @@ export default {
             senha: null,
             local: null,
             telefone: null,
-            cnpj: null
+            cnpj: null,
+          avaliacao: 0,
         }
     }),
-};
+  methods: {
+      async cadastraUsuario (){
+        if (!this.cadastroUsuario){
+          alert("Preencha todos os campos para continuar!")
+          return
+        }
+        if(!this.cadastroUsuario.nome || !this.cadastroUsuario.email || !this.cadastroUsuario.senha){
+          alert("Preencha todos os campos para continuar!")
+          return
+        }
+        fetch('http://localhost:8080/usuario/cadastrar',{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.cadastroUsuario)
+        }).then( () => {
+          alert("Usuario cadastrado com sucesso! Faça o login para continuar")
+          this.cadastroUsuario.nome = null
+          this.cadastroUsuario.email = null
+          this.cadastroUsuario.senha = null
+        })
+            .catch((error) => {
+          console.log("erro: " + error)
+        })
+      },
+    async cadastraEmpresa (){
+      if (!this.logIn){
+        alert("Preencha todos os campos para continuar!")
+        return
+      }
+      if(!this.cadastroEmpresa.email || !this.cadastroEmpresa.senha){
+        alert("Preencha todos os campos para continuar!")
+        return
+      }
+      fetch('http://localhost:8080/empresa/cadastrar', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.cadastroEmpresa)
+      }).then( () => {
+        alert("Empresa cadastrada com sucesso! Faça o login para continuar")
+        this.cadastroEmpresa.nome = null
+        this.cadastroEmpresa.email = null
+        this.cadastroEmpresa.senha = null
+        this.cadastroEmpresa.telefone = null
+        this.cadastroEmpresa.local = null
+        this.cadastroEmpresa.cnpj = null
+      })
+          .catch((error) => {
+            console.log("erro: " + error)
+          })
+    },
+
+    //LOGIN TA BUGADO, SEMPRE DA COMO OK
+    async fazerLogin (){
+      if (!this.logIn){
+        alert("Preencha todos os campos para continuar!")
+        return
+      }
+      if(!this.logIn.email || !this.logIn.senha){
+        alert("Preencha todos os campos para continuar!")
+        return
+      }
+      fetch('http://localhost:8080/auth/login',{
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.logIn)
+      }).then((res) => {
+        console.log(res)
+        alert("Login efetuado")
+      })
+          .catch((error) => {
+            console.log("erro: " + error)
+          })
+    }
+  }
+}
 </script>
 
 <style scoped>
