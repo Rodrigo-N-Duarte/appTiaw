@@ -13,14 +13,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmpresaController {
     private final EmpresaService empresaService;
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/buscar")
     public List<EmpresaDTO> buscarEmpresas(){
         return empresaService.buscarEmpresas();
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/cadastrar")
-    public void cadastrarEmpresa(@RequestBody Empresa empresa){
-        empresaService.cadastrarEmpresa(empresa);
+    public String cadastrarEmpresa(@RequestBody Empresa empresa){
+        return empresaService.cadastrarEmpresa(empresa);
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/avaliacao/{id}/alterar/{avaliacao}")
     public void alterarAvaliacao(@PathVariable("id") Long id, @PathVariable("avaliacao") Double avaliacao){
         empresaService.alterarAvaliacao(id, avaliacao);

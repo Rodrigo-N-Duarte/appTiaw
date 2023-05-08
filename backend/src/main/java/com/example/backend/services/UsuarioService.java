@@ -14,6 +14,9 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     public void cadastraUsuario(Usuario usuario){
+        if (usuarioRepository.emailJaExiste(usuario.getEmail()) != null){
+            return;
+        }
         Usuario novo = new Usuario();
         novo.setNome(usuario.getNome());
         novo.setEmail(usuario.getEmail());
