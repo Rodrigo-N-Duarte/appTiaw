@@ -7,7 +7,12 @@ import LocalDetalheView from "@/views/LocalDetalheView.vue";
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "App",
+    component: SignView,
+  },
+  {
+    path: "/home",
+    name: "Home",
     component: HomeView,
   },
   {

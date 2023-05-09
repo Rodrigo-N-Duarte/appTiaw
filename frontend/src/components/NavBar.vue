@@ -52,6 +52,7 @@
               :class="icon.value"
               :href="icon.href"
               :key="index"
+              :disabled="false && icon.value != 'login'"
           ></v-list-item>
         </v-list>
 
@@ -69,18 +70,19 @@
 </template>
 
 <script>
+
 export default {
   name: "NavBar",
   data() {
     return {
-      theme: "mdi-weather-sunny",
       user: null,
+      theme: "mdi-weather-sunny",
       icons: [
         {
           type: "mdi-view-dashboard",
           name: "Home",
           value: "home",
-          href: "/",
+          href: "/home",
         },
         {
           type: "mdi-order-bool-descending",
@@ -108,13 +110,15 @@ export default {
       if (this.theme == "mdi-weather-sunny") this.theme = "mdi-weather-night";
       else this.theme = "mdi-weather-sunny";
 
-      let res = await fetch("http://localhost:8080/usuario/buscar/1");
-      let data = await res.json();
-      this.user = data
-        console.log(this.user);
+      // this.authStore.user.logado = !this.authStore.user.logado
+
+      // let res = await fetch("http://localhost:8080/usuario/buscar/1");
+      // let data = await res.json();
+      // this.user = data
+      //   console.log(this.user);
     },
   },
-};
+}
 </script>
 <style scoped>
 .card-profile {

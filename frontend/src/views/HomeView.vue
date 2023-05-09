@@ -27,12 +27,17 @@
       <h1>Parece que não existem estabelecimentos parceiros 😢</h1>
     </v-col>
   </v-row>
+  <v-btn @click="mostrar">
+    mostrar
+  </v-btn>
 </v-container>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import LocalCard from "@/components/LocalCard.vue";
+import {useAuthStore} from "@/store/AuthStore";
+import {mapState} from "pinia";
 
 export default defineComponent({
   name: "HomeView",
@@ -57,9 +62,17 @@ export default defineComponent({
       let response = await fetch(url)
       let data = await response.json();
       this.empresas = data
+    },
+    mostrar(){
+      const authStore = useAuthStore()
+      console.log(authStore.estaLogado)
     }
   },
+  computed: {
+    ...mapState(useAuthStore, ['user'])
+  },
   async beforeMount(){
+    console.log(this.user)
     this.buscarEmpresas()
   }
 });
