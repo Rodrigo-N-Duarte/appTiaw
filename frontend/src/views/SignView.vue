@@ -303,11 +303,12 @@ export default {
         body: JSON.stringify(this.logIn)
       })
           .then(async (res) => {
-            //SETAR CONDIÇÃO NO PINIA
-
-
-            console.log(await res.json())
-            // localStorage.setItem('usuarioId', await this.res.id.json())
+              const usuario = await res.json()
+              const ls = {
+                  id: usuario.id,
+                  tipo: usuario.tipo
+              }
+            localStorage.setItem('usuario', JSON.stringify(ls))
           })
           .catch(() => {
             alert("O usuario cadastrado não existe na base de dados!")

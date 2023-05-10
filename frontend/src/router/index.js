@@ -4,6 +4,7 @@ import AboutView from "../views/AboutView.vue";
 import SignView from "../views/SignView.vue";
 import LocalDetalheView from "@/views/LocalDetalheView.vue";
 import PedidosView from "@/views/PedidosView.vue";
+import CardapioView from "@/views/CardapioView.vue";
 
 const routes = [
   {
@@ -17,8 +18,18 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/pedidos",
+    path: "/pedidos/:id",
     name: "pedidos",
+    component: PedidosView,
+  },
+  {
+    path: "/cardapio/:id",
+    name: "cardapio",
+    component: CardapioView,
+  },
+  {
+    path: "/pedidos-em-andamento/:id",
+    name: "pedidos-em-andamento",
     component: PedidosView,
   },
   {

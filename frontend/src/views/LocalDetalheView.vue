@@ -44,7 +44,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" lg="4" v-for="i in 20" :key="i">
+            <v-col cols="12" lg="4" v-for="item in itens" :key="item">
               <v-sheet
                   min-height="40vh"
                   rounded="lg"
@@ -60,15 +60,16 @@
                   ></v-img>
 
                   <v-card-title>
-                    { nome do prato }
+                    {{item.nome}}
                   </v-card-title>
 
                   <v-card-subtitle>
-                    {descricao do prato}
+                    R${{item.preco}}
                   </v-card-subtitle>
 
                   <v-card-actions>
                     <v-btn
+                            @click="adicionarAoPedido(item.id)"
                         color="orange-lighten-2"
                         variant="text"
                     >
@@ -164,7 +165,8 @@ export default {
         email: null,
         telefone: null,
         local: null,
-      }
+      },
+        itens: null
     }
   },
   methods: {
@@ -185,14 +187,28 @@ export default {
         alert("Avaliação feita com sucesso")
         this.dialog = !this.dialog
       })
-    }
+    },
+      async getEmpresa(){
+          const empresaId = this.$route.params.id
+          const url = `http://localhost:8080/empresa/buscar/${empresaId}`
+          let response = await fetch(url)
+          let data = await response.json()
+          this.empresa = data
+      },
+      async getItens(){
+          const empresaId = this.$route.params.id
+          const url = `http://localhost:8080/item/buscar-empresa/${empresaId}`
+          let response = await fetch(url)
+          let data = await response.json()
+          this.itens = data
+      },
+      async adicionarAoPedido(){
+        // FAZER PUT DE ADICIONAR ITEM AO PEDIDO
+      }
   },
   async beforeMount() {
-    const empresaId = this.$route.params.id
-    const url = `http://localhost:8080/empresa/buscar/${empresaId}`
-    let response = await fetch(url)
-    let data = await response.json()
-    this.empresa = data
+    this.getEmpresa()
+      this.getItens()
   }
 }
 </script>
