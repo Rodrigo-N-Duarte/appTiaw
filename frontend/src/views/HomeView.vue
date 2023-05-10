@@ -4,7 +4,7 @@
     <v-col cols="12" lg="7">
       <v-text-field
           v-model="pesquisa"
-          label="Pesquisar"
+          label="Pesquisar por nome"
           single-line
           hide-details
       >

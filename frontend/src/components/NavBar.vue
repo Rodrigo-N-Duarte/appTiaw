@@ -75,7 +75,9 @@ export default {
   name: "NavBar",
   data() {
     return {
-      user: null,
+      user: {
+        nome: 'Rodrigo'
+      },
       theme: "mdi-weather-sunny",
       icons: [
         {
@@ -85,8 +87,8 @@ export default {
           href: "/home",
         },
         {
-          type: "mdi-order-bool-descending",
-          name: "Pedidos",
+          type: "mdi-cart",
+          name: "Meus pedidos",
           value: "pedidos",
           href: "/pedidos",
         },
