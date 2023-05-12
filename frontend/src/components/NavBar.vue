@@ -99,24 +99,6 @@ export default {
                     href: "/about",
                 },
                 {
-                    type: "mdi-format-list-text",
-                    name: "Pedidos atuais",
-                    value: "pedidos-em-andamento",
-                    href: "/pedidos-em-andamento/:id",
-                },
-                {
-                    type: "mdi-clipboard-list",
-                    name: "Cardápio",
-                    value: "cardapio",
-                    href: "/cardapio/:id",
-                },
-                {
-                    type: "mdi-message-bulleted",
-                    name: "Sobre",
-                    value: "sobre",
-                    href: "/about",
-                },
-                {
                     type: "mdi-lock",
                     name: "Login",
                     value: "login",

@@ -203,7 +203,16 @@ export default {
           this.itens = data
       },
       async adicionarAoPedido(){
-        // FAZER PUT DE ADICIONAR ITEM AO PEDIDO
+        // FAZER LOGIN PARA TER O ID DO USUARIO
+       // const idPedido = fetch("http://localhost:8080/pedido/buscar-por-usuario/:id")
+        fetch(`http://localhost:8080/pedido/:idPedido/adicionar-item/:idItem`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(()=> {
+            alert("item adicionado ao pedido")
+        })
       }
   },
   async beforeMount() {

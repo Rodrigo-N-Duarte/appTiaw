@@ -1,7 +1,9 @@
 package com.example.backend.services;
 
+import com.example.backend.models.Cardapio;
 import com.example.backend.models.Empresa;
 import com.example.backend.models.dto.EmpresaDTO;
+import com.example.backend.repositories.CardapioRepository;
 import com.example.backend.repositories.EmpresaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmpresaService {
     private final EmpresaRepository empresaRepository;
+    private final CardapioService cardapioService;
+    private final CardapioRepository cardapioRepository;
 
     public List<EmpresaDTO> buscarEmpresas(){
         List<Empresa> empresas = empresaRepository.findAll();
@@ -78,7 +82,11 @@ public class EmpresaService {
         nova.setTelefone(empresa.getTelefone());
         nova.setAvaliacao(empresa.getAvaliacao());
 
+
         empresaRepository.save(nova);
+        Cardapio cardapio = new Cardapio();
+        cardapio.setEmpresa(nova);
+        cardapioRepository.save(cardapio);
         return "Empresa cadastrada com sucesso!";
     }
 

@@ -37,10 +37,27 @@ public class PedidoService {
         pedidoRepository.save(novo);
     }
     public List<PedidoDTO> buscarPorUsuario(Long id){
+        List<Pedido> pedidos = pedidoRepository.findAll();
         List<PedidoDTO> pedidosUsuario = new ArrayList<>();
-        pedidosUsuario.forEach(pedido -> {
-            if (pedido.getId_usuario() == id){
-                pedidosUsuario.add(pedido);
+        pedidos.forEach(pedido -> {
+            if (pedido.getUsuario().getId() == id){
+                PedidoDTO dto = new PedidoDTO();
+                dto.setId(pedido.getId());
+                dto.setPago(pedido.getPago());
+                dto.setId_empresa(pedido.getEmpresa().getId());
+
+                List<ItemDTO> itensDTO = new ArrayList<>();
+                pedido.getItens().forEach(item -> {
+                    ItemDTO itemDTO = new ItemDTO();
+                    itemDTO.setId(item.getId());
+                    itemDTO.setNome(item.getNome());
+                    itemDTO.setPreco(item.getPreco());
+
+                    itensDTO.add(itemDTO);
+                });
+
+                dto.setId_itens(itensDTO);
+                pedidosUsuario.add(dto);
             }
         });
         return pedidosUsuario;
