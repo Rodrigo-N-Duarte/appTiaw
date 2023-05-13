@@ -37,7 +37,7 @@
         </v-col>
 
        <v-col cols="12" lg="10">
-        <v-card>
+        <v-card style="padding: 30px">
           <v-row justify="start">
             <v-col>
               <v-card-title>Cardápio:</v-card-title>
@@ -152,6 +152,8 @@
 </template>
 
 <script>
+import {useAuthStore} from "@/store/AuthStore";
+
 export default {
   name: "LocalDetalheView",
   data() {
@@ -202,17 +204,24 @@ export default {
           let data = await response.json()
           this.itens = data
       },
-      async adicionarAoPedido(){
-        // FAZER LOGIN PARA TER O ID DO USUARIO
-       // const idPedido = fetch("http://localhost:8080/pedido/buscar-por-usuario/:id")
-        fetch(`http://localhost:8080/pedido/:idPedido/adicionar-item/:idItem`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then(()=> {
-            alert("item adicionado ao pedido")
-        })
+      async adicionarAoPedido(idItem){
+        const authStore = useAuthStore()
+          const idUsuario = authStore.user.id
+
+          await fetch(`http://localhost:8080/pedido/buscar-por-usuario/${idUsuario}`)
+              .then(async (res)=> {
+              const pedido = await res.json()
+              const idPedido = pedido[0].id
+
+              fetch(`http://localhost:8080/pedido/${idPedido}/adicionar-item/${idItem}`, {
+                  method: "PUT",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+              }).then(()=> {
+                  alert("item adicionado ao pedido")
+              })
+          })
       }
   },
   async beforeMount() {

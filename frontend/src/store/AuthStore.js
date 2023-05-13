@@ -4,14 +4,10 @@ export const useAuthStore = defineStore('authStore', {
     state: () => {
         return {
             user: null,
-            estaLogado: false,
         }
     },
+    persist: true,
     getters: {},
-    actions: {
-        setEstaLogado(){
-            this.estaLogado = !this.estaLogado
-        }
-    },
+    actions: {},
 })
 

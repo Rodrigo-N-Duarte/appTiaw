@@ -65,7 +65,7 @@ export default defineComponent({
     },
     mostrar(){
       const authStore = useAuthStore()
-      console.log(authStore.estaLogado)
+      console.log(authStore.user)
     }
   },
   computed: {

@@ -13,23 +13,27 @@ import java.util.List;
 @RequestMapping("/pedido")
 public class PedidoController {
     private final PedidoService pedidoService;
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/cadastrar")
     public void cadastrarPedido(@RequestBody Pedido pedido){
         pedidoService.cadastraPedido(pedido);
     }
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/buscar-por-usuario/{id}")
     public List<PedidoDTO> buscarPorUsuario(@PathVariable("id") Long id){
         return pedidoService.buscarPorUsuario(id);
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/buscar/{id}")
     public PedidoDTO buscaPorId(@PathVariable("id") Long id){
         return pedidoService.buscarPorId(id);
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/buscar")
     public List<PedidoDTO> buscaTodos(){
         return pedidoService.buscaTodos();
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{idPedido}/adicionar-item/{idItem}")
     public void adicionarItem(@PathVariable("idPedido") Long idPedido, @PathVariable("idItem") Long idItem){
         pedidoService.adicionarItem(idPedido, idItem);
