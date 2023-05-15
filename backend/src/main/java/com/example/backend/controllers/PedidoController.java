@@ -38,4 +38,9 @@ public class PedidoController {
     public void adicionarItem(@PathVariable("idPedido") Long idPedido, @PathVariable("idItem") Long idItem){
         pedidoService.adicionarItem(idPedido, idItem);
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/finalizar/{idPedido}")
+    public void adicionarItem(@PathVariable("idPedido") Long idPedido, @RequestBody Pedido pedido){
+        pedidoService.finalizarPedido(idPedido, pedido);
+    }
 }

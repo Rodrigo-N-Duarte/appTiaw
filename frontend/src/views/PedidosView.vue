@@ -29,6 +29,34 @@
             </v-col>
         </v-row>
 
+
+      <v-container>
+            <v-row>
+              <v-col cols="12" lg="4">
+                <v-row
+                    justify="center"
+                    no-gutters
+                >
+                  <v-col cols="5" style="margin: 5px">
+                    <v-text-field
+                        v-model="dataDoPedido"
+                        label="Dia marcado"
+                        type="date"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="5" style="margin: 5px">
+                    <v-text-field
+                        v-model="horaDoPedido"
+                        label="Hora marcada"
+                        type="time"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+        <v-btn @click="mostra">mostrar data e hora no console</v-btn>
+      </v-container>
+
         <v-row justify="start">
             <v-col cols="auto">
                 <v-dialog
@@ -42,6 +70,7 @@
                         >Finalizar pedidos
                         </v-btn>
                     </template>
+
                     <template v-slot:default="{ isActive }">
                         <v-card min-width="300px">
                             <v-toolbar
@@ -74,7 +103,10 @@
                                 <v-btn
                                         color="green"
                                         variant="text"
-                                        @click="isActive.value = false"
+                                        @click="() => {
+                                          isActive.value = false
+                                          finalizarPedido()
+                                        }"
                                 >Pagar
                                 </v-btn>
                             </v-card-actions>
@@ -95,7 +127,10 @@ export default defineComponent({
     data() {
         return {
             dialogFinalizarPedido: false,
+          pedido: null,
             itens: null,
+          dataDoPedido: null,
+          horaDoPedido: null
         }
     },
     methods: {
@@ -105,12 +140,41 @@ export default defineComponent({
             await fetch(`http://localhost:8080/pedido/buscar-por-usuario/${idUsuario}`)
                 .then(async (res) => {
                     const data = await res.json()
+                  this.pedido = data[0]
                     this.itens = data[0].id_itens
+                  console.log(this.pedido)
                 })
+        },
+      mostra(){
+          console.log(this.dataDoPedido)
+          console.log(this.horaDoPedido)
+      },
+      finalizarPedido(){
+          if (!this.dataDoPedido || !this.horaDoPedido){
+            alert("Preencha a data e a hora desejada")
+            return
+          }
+          if (!this.itens){
+            return;
+          }
+          const idPedido = this.pedido.id
+        const pedido = {
+            data: this.dataDoPedido,
+          hora: this.horaDoPedido
         }
+          fetch(`http://localhost:8080/pedido/finalizar/${idPedido}`, {
+            method: "PUT",
+            headers: {
+              "Content-Tpe": "application/json",
+              body: JSON.stringify(pedido)
+            }
+          }).then(()=> {
+            alert("Seu pedido foi encaminhado ao restaurante!")
+          })
+      }
     },
-    beforeMount() {
-        this.buscarPedidoPorUsuario()
+    async beforeMount() {
+        await this.buscarPedidoPorUsuario()
     }
 });
 </script>

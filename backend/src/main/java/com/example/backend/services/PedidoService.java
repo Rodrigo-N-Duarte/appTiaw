@@ -52,6 +52,7 @@ public class PedidoService {
                     itemDTO.setId(item.getId());
                     itemDTO.setNome(item.getNome());
                     itemDTO.setPreco(item.getPreco());
+                    itemDTO.setId_empresa(item.getCardapio().getEmpresa().getId());
 
                     itensDTO.add(itemDTO);
                 });
@@ -77,6 +78,7 @@ public class PedidoService {
             itemDTO.setNome(item.getNome());
             itemDTO.setPreco(item.getPreco());
             itemDTO.setId_cardapio(item.getCardapio().getId());
+            itemDTO.setId_empresa(item.getCardapio().getEmpresa().getId());
 
             listItem.add(itemDTO);
         });
@@ -94,6 +96,8 @@ public class PedidoService {
             dto.setPago(pedido.getPago());
             dto.setId_usuario(pedido.getUsuario().getId());
             dto.setId_empresa(pedido.getEmpresa().getId());
+            dto.setData(pedido.getData());
+            dto.setHora(pedido.getHora());
 
             List<ItemDTO> listItem = new ArrayList<>();
             pedido.getItens().forEach(item -> {
@@ -102,6 +106,7 @@ public class PedidoService {
                 itemDTO.setNome(item.getNome());
                 itemDTO.setPreco(item.getPreco());
                 itemDTO.setId_cardapio(item.getCardapio().getId());
+                itemDTO.setId_empresa(item.getCardapio().getEmpresa().getId());
 
                 listItem.add(itemDTO);
             });
@@ -120,6 +125,15 @@ public class PedidoService {
         listaItens.add(item);
 
         pedido.setItens(listaItens);
+
+        pedidoRepository.save(pedido);
+    }
+
+    public void finalizarPedido(Long id, Pedido novo){
+        Pedido pedido = pedidoRepository.findById(id).get();
+        pedido.setData(novo.getData());
+        pedido.setHora(novo.getHora());
+        pedido.setPago(true);
 
         pedidoRepository.save(pedido);
     }

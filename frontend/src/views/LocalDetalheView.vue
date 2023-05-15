@@ -1,43 +1,48 @@
 <template>
   <v-container>
 
-      <v-row>
-        <v-col cols="12" lg="2">
-          <v-sheet rounded="lg">
-            <v-card
-                class="mx-auto"
-                max-width="400"
+    <v-row>
+      <v-col cols="12" lg="2">
+        <v-sheet rounded="lg">
+          <v-card
+              class="mx-auto"
+              max-width="400"
+          >
+            <v-img
+                class="align-end text-white"
+                height="200"
+                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                cover
             >
-              <v-img
-                  class="align-end text-white"
-                  height="200"
-                  src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                  cover
+            </v-img>
+            <v-card-title>{{ empresa.nome }}</v-card-title>
+            <v-card-subtitle class="pt-4">
+              <v-chip
+                  class="ma-2"
+                  label
+                  text-color="white"
               >
-              </v-img>
-              <v-card-title>{{ empresa.nome }}</v-card-title>
-              <v-card-subtitle class="pt-4">
-                <v-chip
-                    class="ma-2"
-                    label
-                    text-color="white"
-                >
-                  <v-icon start icon="mdi-star" color="orange"></v-icon>
-                  Avaliação: {{ empresa.avaliacao }}/5
-                </v-chip>
-              </v-card-subtitle>
+                <v-icon start icon="mdi-star" color="orange"></v-icon>
+                Avaliação: {{ empresa.avaliacao }}/5
+              </v-chip>
+            </v-card-subtitle>
 
-              <v-card-text>
-                <div><b>Local:</b>{{ empresa.local }}</div>
-                <div><b>Telefone:</b> {{ empresa.telefone }}</div>
-              </v-card-text>
-            </v-card>
-          </v-sheet>
-          <v-spacer></v-spacer>
-        </v-col>
+            <v-card-text>
+              <div><b>Local:</b>{{ empresa.local }}</div>
+              <div><b>Telefone:</b> {{ empresa.telefone }}</div>
+            </v-card-text>
+          </v-card>
+        </v-sheet>
+        <v-spacer></v-spacer>
+      </v-col>
 
-       <v-col cols="12" lg="10">
+      <v-col cols="12" lg="10">
         <v-card style="padding: 30px">
+          <v-row justify="start">
+            <v-col>
+              <v-btn prepend-icon="mdi-plus" @click="criarPedido">Começar um novo pedido nessa empresa</v-btn>
+            </v-col>
+          </v-row>
           <v-row justify="start">
             <v-col>
               <v-card-title>Cardápio:</v-card-title>
@@ -60,16 +65,16 @@
                   ></v-img>
 
                   <v-card-title>
-                    {{item.nome}}
+                    {{ item.nome }}
                   </v-card-title>
 
                   <v-card-subtitle>
-                    R${{item.preco}}
+                    R${{ item.preco }}
                   </v-card-subtitle>
 
                   <v-card-actions>
                     <v-btn
-                            @click="adicionarAoPedido(item.id)"
+                        @click="adicionarAoPedido(item.id)"
                         color="orange-lighten-2"
                         variant="text"
                     >
@@ -82,71 +87,71 @@
             </v-col>
           </v-row>
         </v-card>
-       </v-col>
-      </v-row>
+      </v-col>
+    </v-row>
 
-      <v-row justify="center" style="position: fixed; bottom: 0; margin: 20px">
-        <v-col cols="12">
-          <v-btn append-icon="mdi-pencil" @click="this.dialog = !this.dialog">
-            Avaliar local
-          </v-btn>
-        </v-col>
-      </v-row>
+    <v-row justify="center" style="position: fixed; bottom: 0; margin: 20px">
+      <v-col cols="12">
+        <v-btn append-icon="mdi-pencil" @click="this.dialog = !this.dialog">
+          Avaliar local
+        </v-btn>
+      </v-col>
+    </v-row>
 
 
-      <v-row justify="center">
-        <v-dialog
-            v-model="dialog"
-            persistent
-            width="1024"
-        >
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">Avaliar: {{ empresa.nome }}</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <v-text-field
-                        v-model="avaliar"
-                        type="number"
-                        min="0"
-                        max="5"
-                        label="Avaliação *"
-                        required
-                        style="display: inline"
-                    ></v-text-field>
-                  </v-col>
+    <v-row justify="center">
+      <v-dialog
+          v-model="dialog"
+          persistent
+          width="1024"
+      >
+        <v-card>
+          <v-card-title>
+            <span class="text-h5">Avaliar: {{ empresa.nome }}</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                >
+                  <v-text-field
+                      v-model="avaliar"
+                      type="number"
+                      min="0"
+                      max="5"
+                      label="Avaliação *"
+                      required
+                      style="display: inline"
+                  ></v-text-field>
+                </v-col>
 
-                </v-row>
-              </v-container>
-              <small>Deixe uma avaliação de 1 a 5 estrelas.</small>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="dialog = false"
-              >
-                Cancelar
-              </v-btn>
-              <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="avaliarEmpresa"
-              >
-                Salvar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
+              </v-row>
+            </v-container>
+            <small>Deixe uma avaliação de 1 a 5 estrelas.</small>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="blue-darken-1"
+                variant="text"
+                @click="dialog = false"
+            >
+              Cancelar
+            </v-btn>
+            <v-btn
+                color="blue-darken-1"
+                variant="text"
+                @click="avaliarEmpresa"
+            >
+              Salvar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
 
   </v-container>
 </template>
@@ -168,7 +173,7 @@ export default {
         telefone: null,
         local: null,
       },
-        itens: null
+      itens: null
     }
   },
   methods: {
@@ -190,43 +195,72 @@ export default {
         this.dialog = !this.dialog
       })
     },
-      async getEmpresa(){
-          const empresaId = this.$route.params.id
-          const url = `http://localhost:8080/empresa/buscar/${empresaId}`
-          let response = await fetch(url)
-          let data = await response.json()
-          this.empresa = data
-      },
-      async getItens(){
-          const empresaId = this.$route.params.id
-          const url = `http://localhost:8080/item/buscar-empresa/${empresaId}`
-          let response = await fetch(url)
-          let data = await response.json()
-          this.itens = data
-      },
-      async adicionarAoPedido(idItem){
-        const authStore = useAuthStore()
-          const idUsuario = authStore.user.id
+    async getEmpresa() {
+      const empresaId = this.$route.params.id
+      const url = `http://localhost:8080/empresa/buscar/${empresaId}`
+      let response = await fetch(url)
+      let data = await response.json()
+      this.empresa = data
+    },
+    async getItens() {
+      const empresaId = this.$route.params.id
+      const url = `http://localhost:8080/item/buscar-empresa/${empresaId}`
+      let response = await fetch(url)
+      let data = await response.json()
+      this.itens = data
+    },
+    async adicionarAoPedido(idItem) {
+      const authStore = useAuthStore()
+      const idUsuario = authStore.user.id
 
-          await fetch(`http://localhost:8080/pedido/buscar-por-usuario/${idUsuario}`)
-              .then(async (res)=> {
-              const pedido = await res.json()
-              const idPedido = pedido[0].id
+      await fetch(`http://localhost:8080/pedido/buscar-por-usuario/${idUsuario}`)
+          .then(async (res) => {
+            const pedido = await res.json()
+            if (!pedido || !pedido[0]) {
+              alert("Antes de continuar, primeiro faça a requisição de um novo pedido")
+              return;
+            }
+            const idPedido = pedido[0].id
 
-              fetch(`http://localhost:8080/pedido/${idPedido}/adicionar-item/${idItem}`, {
-                  method: "PUT",
-                  headers: {
-                      "Content-Type": "application/json",
-                  },
-              }).then(()=> {
-                  alert("item adicionado ao pedido")
-              })
+            fetch(`http://localhost:8080/pedido/${idPedido}/adicionar-item/${idItem}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }).then(() => {
+              alert("item adicionado ao pedido")
+            })
           })
+    },
+    async criarPedido() {
+      const authStore = useAuthStore()
+      const pedido = {
+        pago: false,
+        usuario: {
+          id: authStore.user.id
+        },
+        empresa: {
+          id: this.empresa.id
+        }
       }
+      fetch(`http://localhost:8080/pedido/cadastrar`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(pedido)
+      })
+          .then(() => {
+            alert("Pedido criado com sucesso, a função 'carrinho' está disponível agora")
+          })
+          .catch((err) => {
+            alert("Ocorreu um erro " + err)
+          })
+    }
   },
   async beforeMount() {
     this.getEmpresa()
-      this.getItens()
+    this.getItens()
   }
 }
 </script>

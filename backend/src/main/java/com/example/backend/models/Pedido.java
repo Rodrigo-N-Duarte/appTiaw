@@ -1,16 +1,15 @@
 package com.example.backend.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.sql.Time;
+import java.util.*;
 
 @Entity
 @Getter
@@ -23,6 +22,10 @@ public class Pedido implements Serializable {
     private Long id;
     @Column
     private Boolean pago;
+    @Column
+    private String data;
+    @Column
+    private String hora;
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
