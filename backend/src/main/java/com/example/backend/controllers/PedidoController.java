@@ -40,7 +40,13 @@ public class PedidoController {
     }
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/finalizar/{idPedido}")
-    public void adicionarItem(@PathVariable("idPedido") Long idPedido, @RequestBody Pedido pedido){
-        pedidoService.finalizarPedido(idPedido, pedido);
+    public void adicionarItem(@PathVariable("idPedido") Long idPedido, @RequestParam("data") String data, @RequestParam("hora") String hora){
+        pedidoService.finalizarPedido(idPedido, data, hora);
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/excluir/{idPedido}")
+    public void excluirPedido(@PathVariable("idPedido") Long id){
+        pedidoService.excluirPedido(id);
+    }
+
 }

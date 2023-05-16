@@ -3,11 +3,15 @@ package com.example.backend.services;
 import com.example.backend.models.Mesa;
 import com.example.backend.models.Reserva;
 import com.example.backend.models.Usuario;
+import com.example.backend.models.dto.ReservaDTO;
 import com.example.backend.repositories.MesaRepository;
 import com.example.backend.repositories.ReservaRepository;
 import com.example.backend.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +35,19 @@ public class ReservaService {
 
         reservaRepository.save(nova);
         return "Sua reserva foi feita com sucesso na mesa de número: " + mesaRequisitada.getNumero();
+    }
+    public List<ReservaDTO> buscarReservasPorUsuario(Long idUsuario){
+        List<Reserva> reservas = reservaRepository.buscarReservasPorUsuario(idUsuario);
+        List<ReservaDTO> dtos = new ArrayList<>();
+        reservas.forEach(reserva -> {
+            ReservaDTO dto = new ReservaDTO();
+            dto.setId(reserva.getId());
+            dto.setUsuario(reserva.getUsuario().getId());
+            dto.setData(reserva.getData());
+            dto.setHora(reserva.getHora());
+            dto.setMesa(reserva.getMesa().getId());
+            dtos.add(dto);
+        });
+        return dtos;
     }
 }

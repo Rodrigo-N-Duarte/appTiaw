@@ -1,7 +1,7 @@
 <template>
-    <v-container>
-        <v-card-title>Pedidos</v-card-title>
-        <v-row>
+    <v-container v-if="pedido">
+        <v-card-title>Pedido de número {{pedido.id}}</v-card-title>
+        <v-row v-if="itens[0]">
             <v-col v-for="i in itens" :key="i" cols="12" lg="3">
                 <v-card
                         class="mx-auto"
@@ -28,6 +28,11 @@
                 </v-card>
             </v-col>
         </v-row>
+      <v-row justify="center" v-else>
+        <v-col cols="7" class="ma-16">
+          <h2>Adicione itens ao seu pedido para continuar ☕️</h2>
+        </v-col>
+      </v-row>
 
 
       <v-container>
@@ -54,7 +59,7 @@
                 </v-row>
               </v-col>
             </v-row>
-        <v-btn @click="mostra">mostrar data e hora no console</v-btn>
+        <v-btn @click="excluirPedido" color="red">Excluir pedido</v-btn>
       </v-container>
 
         <v-row justify="start">
@@ -116,6 +121,13 @@
             </v-col>
         </v-row>
     </v-container>
+  <v-container v-else>
+    <v-row justify="center" style="margin-top: 15%">
+      <v-col cols="7">
+        <h1>Você não possui pedidos ativos 😢</h1>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -158,19 +170,31 @@ export default defineComponent({
             return;
           }
           const idPedido = this.pedido.id
-        const pedido = {
-            data: this.dataDoPedido,
-          hora: this.horaDoPedido
-        }
-          fetch(`http://localhost:8080/pedido/finalizar/${idPedido}`, {
+
+            const data = this.dataDoPedido
+          const hora = this.horaDoPedido
+
+          fetch(`http://localhost:8080/pedido/finalizar/${idPedido}?data=${data}&hora=${hora}`, {
             method: "PUT",
             headers: {
               "Content-Tpe": "application/json",
-              body: JSON.stringify(pedido)
-            }
+            },
           }).then(()=> {
             alert("Seu pedido foi encaminhado ao restaurante!")
           })
+      },
+      async excluirPedido(){
+        const idPedido = this.pedido.id
+        await fetch(`http://localhost:8080/pedido/excluir/${idPedido}`, {
+          method: "DELETE",
+          headers: {
+            "Content_Type": "application/json"
+          }
+        })
+            .then(()=> {
+              alert("Pedido excluido")
+              location.reload()
+            })
       }
     },
     async beforeMount() {

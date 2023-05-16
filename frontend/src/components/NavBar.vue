@@ -94,6 +94,12 @@ export default {
                     value: "pedidos",
                     href: "/pedidos/:id",
                 },
+              {
+                type: "mdi-clock-outline",
+                name: "Reservas",
+                value: "reservas",
+                href: "/reservas",
+              },
                 {
                     type: "mdi-message-bulleted",
                     name: "Sobre",

@@ -129,12 +129,17 @@ public class PedidoService {
         pedidoRepository.save(pedido);
     }
 
-    public void finalizarPedido(Long id, Pedido novo){
+    public void finalizarPedido(Long id, String data, String hora){
         Pedido pedido = pedidoRepository.findById(id).get();
-        pedido.setData(novo.getData());
-        pedido.setHora(novo.getHora());
+        pedido.setData(data);
+        pedido.setHora(hora);
         pedido.setPago(true);
 
+
         pedidoRepository.save(pedido);
+    }
+
+    public void excluirPedido(Long id){
+        pedidoRepository.deleteById(id);
     }
 }

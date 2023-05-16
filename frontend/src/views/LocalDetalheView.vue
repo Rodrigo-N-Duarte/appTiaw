@@ -38,7 +38,7 @@
 
       <v-col cols="12" lg="10">
         <v-card style="padding: 30px">
-          <v-row justify="start">
+          <v-row justify="start" v-if="!pedido">
             <v-col>
               <v-btn prepend-icon="mdi-plus" @click="criarPedido">Começar um novo pedido nessa empresa</v-btn>
             </v-col>
@@ -87,8 +87,102 @@
             </v-col>
           </v-row>
         </v-card>
+        <v-card style="padding: 30px" class="mt-10">
+          <v-row justify="start" v-if="!pedido">
+            <v-col>
+              <v-btn prepend-icon="mdi-plus" @click="criarPedido">Começar um novo pedido nessa empresa</v-btn>
+            </v-col>
+          </v-row>
+          <v-row justify="start">
+            <v-col>
+              <v-card-title>Mesas para reserva:</v-card-title>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6" lg="2" v-for="mesa in mesas" :key="mesa">
+              <v-card
+                  :color="mesa.disponivel ? 'green' : 'red'"
+                  theme="dark"
+              >
+                <v-card-title class="text-h5">
+                  Mesa {{ mesa.numero }}
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn variant="text" :disabled="!mesa.disponivel" @click="mesaSelecionada.numero = mesa.numero;
+                  mesaSelecionada.id = mesa.id
+                  dialogReservarMesa = !dialogReservarMesa">
+                    <span v-if="mesa.disponivel">Reservar</span>
+                    <span v-else>Mesa ocupada</span>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+
+          </v-row>
+        </v-card>
       </v-col>
     </v-row>
+
+    <v-dialog
+        v-model="dialogReservarMesa"
+        width="500"
+    >
+      <template>
+        <v-btn
+            color="primary"
+        >
+          Reserva de mesa
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title>
+          Reservar mesa de número {{mesaSelecionada.numero}}
+        </v-card-title>
+        <v-card-text>
+          <v-card-subtitle>Selecione uma data e hora para a reserva: </v-card-subtitle>
+          <v-row>
+            <v-col cols="12">
+              <v-row
+                  justify="center"
+                  no-gutters
+              >
+                <v-col cols="5" style="margin: 5px">
+                  <v-text-field
+                      v-model="dataReserva"
+                      label="Dia marcado"
+                      type="date"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="5" style="margin: 5px">
+                  <v-text-field
+                      v-model="horaReserva"
+                      label="Hora marcada"
+                      type="time"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              variant="text"
+              @click="dialogReservarMesa = !dialogReservarMesa"
+          >
+            Fechar
+          </v-btn>
+          <v-btn
+              color="green-darken-1"
+              variant="text"
+              @click="reservarMesa"
+          >
+            Efetuar reserva
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-row justify="center" style="position: fixed; bottom: 0; margin: 20px">
       <v-col cols="12">
@@ -164,6 +258,13 @@ export default {
   data() {
     return {
       dialog: false,
+      dialogReservarMesa: false,
+      mesaSelecionada: {
+        id: null,
+        numero: null
+      },
+      dataReserva: null,
+      horaReserva: null,
       avaliar: null,
       empresa: {
         id: null,
@@ -173,7 +274,9 @@ export default {
         telefone: null,
         local: null,
       },
-      itens: null
+      itens: null,
+      pedido: null,
+      mesas: null
     }
   },
   methods: {
@@ -233,6 +336,11 @@ export default {
           })
     },
     async criarPedido() {
+      await this.buscarPedidoPorUsuario()
+      if (this.pedido){
+        alert("Encerre o pedido atual antes de começar um novo!")
+        return
+      }
       const authStore = useAuthStore()
       const pedido = {
         pago: false,
@@ -256,11 +364,41 @@ export default {
           .catch((err) => {
             alert("Ocorreu um erro " + err)
           })
+    },
+    async buscarPedidoPorUsuario() {
+      const authStore = useAuthStore();
+      const idUsuario = authStore.user.id
+      await fetch(`http://localhost:8080/pedido/buscar-por-usuario/${idUsuario}`)
+          .then(async (res) => {
+            const data = await res.json()
+            this.pedido = data[0]
+          })
+    },
+    async buscarMesasPorEmpresa(){
+      const idEmpresa = this.empresa.id
+      await fetch(`http://localhost:8080/mesa/buscar-mesa-por-empresa/${idEmpresa}`)
+          .then(async (res) => {
+            const data = await res.json()
+            this.mesas = data
+          })
+    },
+    async reservarMesa(){
+      if (!this.dataReserva || !this.horaReserva){
+        alert("Selecione primeiro uma data e uma hora")
+        return
+      }
+      if (!this.mesaSelecionada || !this.mesaSelecionada.id || !this.mesaSelecionada.numero){
+        return
+      }
+      // TODO RESERVAR MESA
+      this.dialogReservarMesa = !this.dialogReservarMesa
     }
   },
   async beforeMount() {
-    this.getEmpresa()
-    this.getItens()
+    await this.getEmpresa()
+    await this.getItens()
+    await this.buscarPedidoPorUsuario()
+    await this.buscarMesasPorEmpresa()
   }
 }
 </script>
