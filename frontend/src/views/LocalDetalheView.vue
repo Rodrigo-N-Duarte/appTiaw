@@ -88,11 +88,6 @@
           </v-row>
         </v-card>
         <v-card style="padding: 30px" class="mt-10">
-          <v-row justify="start" v-if="!pedido">
-            <v-col>
-              <v-btn prepend-icon="mdi-plus" @click="criarPedido">Começar um novo pedido nessa empresa</v-btn>
-            </v-col>
-          </v-row>
           <v-row justify="start">
             <v-col>
               <v-card-title>Mesas para reserva:</v-card-title>
@@ -285,7 +280,6 @@ export default {
         alert("Ocorreu um erro, confira o valor inserido")
         return
       }
-
       const id = this.empresa.id
       const avaliacao = this.avaliar
       fetch(`http://localhost:8080/empresa/avaliacao/${id}/alterar/${avaliacao}`, {
@@ -360,6 +354,7 @@ export default {
       })
           .then(() => {
             alert("Pedido criado com sucesso, a função 'carrinho' está disponível agora")
+            this.buscarPedidoPorUsuario()
           })
           .catch((err) => {
             alert("Ocorreu um erro " + err)
@@ -390,7 +385,36 @@ export default {
       if (!this.mesaSelecionada || !this.mesaSelecionada.id || !this.mesaSelecionada.numero){
         return
       }
-      // TODO RESERVAR MESA
+      const authStore = useAuthStore()
+      const reserva = {
+        data: this.dataReserva,
+        hora: this.horaReserva,
+        mesa: {
+          id: this.mesaSelecionada.id
+        },
+        usuario: {
+          id: authStore.user.id
+        }
+      }
+      await fetch(`http://localhost:8080/reserva/adicionar`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reserva)
+      })
+          .then(async () => {
+            const idMesa = this.mesaSelecionada.id
+            await fetch(`http://localhost:8080/mesa/alterar-disponibilidade/${idMesa}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+            alert("Nova reserva adicionada!")
+            await this.buscarMesasPorEmpresa()
+          })
+
       this.dialogReservarMesa = !this.dialogReservarMesa
     }
   },

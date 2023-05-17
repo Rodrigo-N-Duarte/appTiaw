@@ -16,15 +16,29 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequiredArgsConstructor
 public class AuthService {
     private final UsuarioRepository usuarioRepository;
+    private final EmpresaRepository empresaRepository;
 
-    public UsuarioDTO fazerLoginUsuario(String email, String senha){
+    public AuthDTO fazerLogin(String email, String senha){
         List<Usuario> usuarios = usuarioRepository.findAll();
         for (Usuario usuario : usuarios)  {
             if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)){
-                UsuarioDTO dto = new UsuarioDTO();
+                AuthDTO dto = new AuthDTO();
                 dto.setId(usuario.getId());
-                dto.setEmail(usuario.getEmail());
                 dto.setNome(usuario.getNome());
+                dto.setEmail(usuario.getEmail());
+                dto.setTipo("usuario");
+                return dto;
+            }
+        }
+        List<Empresa> empresas = empresaRepository.findAll();
+        for (Empresa empresa : empresas)  {
+            if (empresa.getEmail().equals(email) && empresa.getSenha().equals(senha)){
+                AuthDTO dto = new AuthDTO();
+                dto.setId(empresa.getId());
+                dto.setNome(empresa.getNome());
+                dto.setEmail(empresa.getEmail());
+                dto.setTipo("empresa");
+
                 return dto;
             }
         }

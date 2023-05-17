@@ -15,9 +15,9 @@ import java.util.List;
 public class AuthController {
     private final AuthService authService;
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping("/login-usuario")
-    public UsuarioDTO fazerLoginUsuario(@RequestBody Usuario user){
+    @PostMapping("/login")
+    public AuthDTO fazerLoginUsuario(@RequestBody Usuario user){
         String email = user.getEmail(), senha = user.getSenha();
-        return authService.fazerLoginUsuario(email, senha);
+        return authService.fazerLogin(email, senha);
     }
 }

@@ -19,10 +19,15 @@ public class ReservaController {
     public String adicionarReserva(@RequestBody Reserva reserva){
         return reservaService.adicionarReserva(reserva);
     }
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/buscar-por-usuario/{idUsuario}")
     public List<ReservaDTO> buscarReservasPorUsuario(@PathVariable("idUsuario") Long idUsuario){
         return reservaService.buscarReservasPorUsuario(idUsuario);
     }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/excluir/{id}")
+    public void excluirReserva(@PathVariable("id") Long id){
+        reservaService.excluirReserva(id);
+    }
+
 }

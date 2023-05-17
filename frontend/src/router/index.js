@@ -5,6 +5,7 @@ import SignView from "../views/SignView.vue";
 import LocalDetalheView from "@/views/LocalDetalheView.vue";
 import PedidosView from "@/views/PedidosView.vue";
 import ReservasView from "@/views/ReservasView.vue";
+import DashboardView from "@/views/DashboardView.vue";
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
     path: "/local/:id",
     name: "localDetalhe",
     component: LocalDetalheView,
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: DashboardView,
   },
 ];
 

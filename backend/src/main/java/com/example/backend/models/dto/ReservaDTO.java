@@ -16,4 +16,6 @@ public class ReservaDTO {
     private String hora;
     private Long usuario;
     private Long mesa;
+    private String numero_mesa;
+    private String nome_empresa;
 }

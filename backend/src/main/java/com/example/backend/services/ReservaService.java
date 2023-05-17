@@ -1,8 +1,10 @@
 package com.example.backend.services;
 
+import com.example.backend.models.Empresa;
 import com.example.backend.models.Mesa;
 import com.example.backend.models.Reserva;
 import com.example.backend.models.Usuario;
+import com.example.backend.models.dto.EmpresaDTO;
 import com.example.backend.models.dto.ReservaDTO;
 import com.example.backend.repositories.MesaRepository;
 import com.example.backend.repositories.ReservaRepository;
@@ -18,7 +20,9 @@ import java.util.List;
 public class ReservaService {
     private final ReservaRepository reservaRepository;
     private final MesaRepository mesaRepository;
+    private final MesaService mesaService;
     private final UsuarioRepository usuarioRepository;
+    private final EmpresaService empresaService;
 
     public String adicionarReserva(Reserva reserva){
         Mesa mesaRequisitada = mesaRepository.findById(reserva.getMesa().getId()).get();
@@ -34,6 +38,7 @@ public class ReservaService {
         nova.setUsuario(usuario);
 
         reservaRepository.save(nova);
+
         return "Sua reserva foi feita com sucesso na mesa de número: " + mesaRequisitada.getNumero();
     }
     public List<ReservaDTO> buscarReservasPorUsuario(Long idUsuario){
@@ -46,8 +51,18 @@ public class ReservaService {
             dto.setData(reserva.getData());
             dto.setHora(reserva.getHora());
             dto.setMesa(reserva.getMesa().getId());
+            dto.setNumero_mesa(reserva.getMesa().getNumero());
+            EmpresaDTO empresa = empresaService.buscarEmpresaPorId(reserva.getMesa().getEmpresa().getId());
+            dto.setNome_empresa(empresa.getNome());
             dtos.add(dto);
         });
         return dtos;
+    }
+
+    public void excluirReserva(Long id){
+        Reserva reserva = reservaRepository.findById(id).get();
+        Long idMesa = reserva.getMesa().getId();
+        mesaService.alterarDisponibilidade(idMesa);
+        reservaRepository.deleteById(id);
     }
 }

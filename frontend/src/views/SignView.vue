@@ -196,7 +196,7 @@
             </v-window-item>
         </v-window>
         <v-btn @click="mostra">mostrar</v-btn>
-        <v-btn @click="authStore.user = null">null</v-btn>
+        <v-btn @click="authStore.user = null; authStore.tipoUsuario = null">null</v-btn>
     </div>
 </template>
 
@@ -295,7 +295,7 @@ export default {
                 alert("Preencha todos os campos para continuar!")
                 return
             }
-            fetch('http://localhost:8080/auth/login-usuario', {
+            fetch('http://localhost:8080/auth/login', {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -306,8 +306,11 @@ export default {
                 .then(async (res) => {
                     const usuario = await res.json()
                     this.authStore.user = usuario
+                  this.authStore.tipoUsuario = usuario.tipo
                     console.log(this.authStore.user)
+                  if (this.authStore.tipoUsuario == "usuario")
                     this.$router.push("/home")
+                  else this.$router.push("/dashboard")
 
                     //   const ls = {
                     //       id: usuario.id,
