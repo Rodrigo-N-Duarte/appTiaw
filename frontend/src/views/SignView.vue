@@ -312,11 +312,6 @@ export default {
                     this.$router.push("/home")
                   else this.$router.push("/dashboard")
 
-                    //   const ls = {
-                    //       id: usuario.id,
-                    //       tipo: usuario.tipo
-                    //   }
-                    // localStorage.setItem('usuario', JSON.stringify(ls))
                 })
                 .catch(() => {
                     alert("O usuario cadastrado não existe na base de dados!")

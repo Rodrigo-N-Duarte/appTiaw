@@ -14,5 +14,4 @@ import java.util.List;
 public class CardapioDTO implements Serializable {
     private Long id;
     private Long id_empresa;
-    private List<Item> itens;
 }

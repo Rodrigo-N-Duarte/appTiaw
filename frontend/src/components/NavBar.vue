@@ -99,7 +99,7 @@ export default {
           type: "mdi-home",
           name: "Home",
           value: "home",
-          href: "/dashboard",
+          href: "/home",
         },
         {
           type: "mdi-cart",

@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.models.Cardapio;
+import com.example.backend.models.dto.CardapioDTO;
 import com.example.backend.services.CardapioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class CardapioController {
         cardapioService.adicionarCardapio(cardapio);
     }
     @GetMapping("/listar-por-empresa/{idEmpresa}")
-    public List<Cardapio> listarPorEmpresa(@PathVariable("idEmpresa") Long idEmpresa){
+    public List<CardapioDTO> listarPorEmpresa(@PathVariable("idEmpresa") Long idEmpresa){
         return cardapioService.listarPorEmpresa(idEmpresa);
     }
 }

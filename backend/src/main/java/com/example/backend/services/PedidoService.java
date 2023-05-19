@@ -63,6 +63,15 @@ public class PedidoService {
         });
         return pedidosUsuario;
     }
+    public List<PedidoDTO> buscarPorEmpresa(Long id){
+        List<PedidoDTO> pedidos = this.buscaTodos();
+        pedidos.forEach(pedidoDTO -> {
+            if (pedidoDTO.getId_empresa() != id){
+                pedidos.remove(pedidoDTO);
+            }
+        });
+        return pedidos;
+    }
     public PedidoDTO buscarPorId(Long id){
         Pedido pedido = pedidoRepository.findById(id).get();
         PedidoDTO dto = new PedidoDTO();

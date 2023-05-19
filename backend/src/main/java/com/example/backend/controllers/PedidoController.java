@@ -24,6 +24,11 @@ public class PedidoController {
         return pedidoService.buscarPorUsuario(id);
     }
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/buscar-por-empresa/{id}")
+    public List<PedidoDTO> buscarPorEmpresa(@PathVariable("id") Long id){
+        return pedidoService.buscaTodos();
+    }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/buscar/{id}")
     public PedidoDTO buscaPorId(@PathVariable("id") Long id){
         return pedidoService.buscarPorId(id);
