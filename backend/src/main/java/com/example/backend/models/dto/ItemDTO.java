@@ -12,4 +12,5 @@ public class ItemDTO implements Serializable {
     private Double preco;
     private Long id_cardapio;
     private Long id_empresa;
+    private String imagem;
 }

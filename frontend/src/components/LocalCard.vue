@@ -12,7 +12,7 @@
     <v-img
       cover
       height="250"
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+      :src="empresa.imagem"
     ></v-img>
 
     <v-card-item>

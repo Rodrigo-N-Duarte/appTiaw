@@ -24,6 +24,7 @@ public class ItemService {
         novo.setCardapio(cardapioRepository.findById(item.getCardapio().getId()).get());
         novo.setPreco(item.getPreco());
         novo.setNome(item.getNome());
+        novo.setImagem(item.getImagem());
 
         itemRepository.save(novo);
     }
@@ -34,6 +35,7 @@ public class ItemService {
         dto.setId(item.getId());
         dto.setNome(item.getNome());
         dto.setPreco(item.getPreco());
+        dto.setImagem(item.getImagem());
         dto.setId_cardapio(item.getCardapio().getId());
 
         return dto;
@@ -48,6 +50,7 @@ public class ItemService {
             dto.setId(item.getId());
             dto.setNome(item.getNome());
             dto.setPreco(item.getPreco());
+            dto.setImagem(item.getImagem());
             dto.setId_cardapio(item.getCardapio().getId());
 
             dtos.add(dto);
@@ -69,6 +72,7 @@ public class ItemService {
                 dto.setId(item.getId());
                 dto.setNome(item.getNome());
                 dto.setPreco(item.getPreco());
+                dto.setImagem(item.getImagem());
                 dto.setId_cardapio(item.getCardapio().getId());
 
                 dtos.add(dto);

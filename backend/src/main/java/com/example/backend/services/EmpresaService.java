@@ -33,6 +33,7 @@ public class EmpresaService {
             dto.setLocal(empresa.getLocal());
             dto.setTelefone(empresa.getTelefone());
             dto.setAvaliacao(empresa.getAvaliacao());
+            dto.setImagem(empresa.getImagem());
 
             empresasDTO.add(dto);
         });
@@ -51,6 +52,7 @@ public class EmpresaService {
             dto.setLocal(empresa.getLocal());
             dto.setTelefone(empresa.getTelefone());
             dto.setAvaliacao(empresa.getAvaliacao());
+            dto.setImagem(empresa.getImagem());
 
             empresasDTO.add(dto);
         });
@@ -66,13 +68,14 @@ public class EmpresaService {
         dto.setLocal(empresa.getLocal());
         dto.setTelefone(empresa.getTelefone());
         dto.setAvaliacao(empresa.getAvaliacao());
+        dto.setImagem((empresa.getImagem()).toString());
 
         return dto;
     }
     public String cadastrarEmpresa(Empresa empresa){
-        if (empresaRepository.emailJaExiste(empresa.getEmail()) != null){
-            return "Email já existe";
-        }
+       /* if (empresaRepository.emailJaExiste(empresa.getEmail()) != null){
+            return "Email ja existe";
+        }*/
         Empresa nova = new Empresa();
         nova.setNome(empresa.getNome());
         nova.setEmail(empresa.getEmail());
@@ -81,13 +84,13 @@ public class EmpresaService {
         nova.setLocal(empresa.getLocal());
         nova.setTelefone(empresa.getTelefone());
         nova.setAvaliacao(empresa.getAvaliacao());
-
+        nova.setImagem(empresa.getImagem());
 
         empresaRepository.save(nova);
         Cardapio cardapio = new Cardapio();
         cardapio.setEmpresa(nova);
         cardapioRepository.save(cardapio);
-        return "Empresa cadastrada com sucesso!";
+        return "Empresa cadastrada";
     }
 
     public void alterarAvaliacao(Long id, Double avaliacao){

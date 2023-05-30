@@ -10,8 +10,7 @@
           >
             <v-img
                 cover
-                height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                :src="empresa.imagem"
             ></v-img>
 
             <v-card-title>
@@ -61,6 +60,7 @@
                       class="mx-auto"
                       prepend-icon="mdi-circle-medium"
                   >
+                    <v-img :src="item.imagem"></v-img>
                     <template v-slot:title>
                       {{ item.nome }}
                     </template>
@@ -71,6 +71,7 @@
                     <v-card-text>
                       Número: {{ item.id }}
                     </v-card-text>
+                    <v-btn @click="">mostra</v-btn>
                   </v-card>
                 </v-col>
               </v-row>
@@ -177,6 +178,11 @@
           <v-card-subtitle>Informe os dados a seguir: </v-card-subtitle>
           <v-row>
             <v-col cols="12">
+              <v-row    justify="center"
+                        no-gutters>
+                <v-file-input v-model="imagemNovoItem" label="Imagem de capa"
+                              variant="solo-filled"></v-file-input>
+              </v-row>
               <v-row
                   justify="center"
                   no-gutters
@@ -242,7 +248,8 @@ export default {
       mesas: null,
       dialogAdicionarNovoItem: false,
       nomeNovoItem: null,
-      precoNovoItem: null
+      precoNovoItem: null,
+      imagemNovoItem: null
     }
   },
   methods: {
@@ -303,14 +310,17 @@ export default {
                 this.cardapio = data[0]
               })
     },
+
     async adicionarItemAoCardapio(){
       if (!this.nomeNovoItem || !this.precoNovoItem){
         alert("Preencha os dados corretamente!")
         return
       }
+      this.imagemNovoItem = (await this.fileToBase64(this.imagemNovoItem[0])).toString()
       const item = {
         nome: this.nomeNovoItem,
         preco: this.precoNovoItem,
+        imagem: this.imagemNovoItem,
         cardapio: {
           id: this.cardapio.id
         }
@@ -327,7 +337,24 @@ export default {
             this.dialogAdicionarNovoItem = !this.dialogAdicionarNovoItem
             this.buscarItens()
           })
-    }
+    },
+
+    async fileToBase64(imageFile) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          const base64String = reader.result;
+          resolve(base64String);
+        };
+
+        reader.onerror = (error) => {
+          reject(error);
+        };
+
+        reader.readAsDataURL(imageFile);
+      });
+    },
   },
   async beforeMount() {
     await this.buscarEmpresa()

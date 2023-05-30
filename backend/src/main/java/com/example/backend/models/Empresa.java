@@ -7,8 +7,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
 import java.io.Serializable;
+import java.sql.Blob;
+import java.sql.Clob;
 import java.util.List;
 
 @Entity
@@ -39,6 +42,9 @@ public class Empresa implements Serializable {
     private String telefone;
     @Column
     private Double avaliacao;
+    @Column
+    @Lob
+    private String imagem;
     @OneToMany
     @JoinColumn(name = "id_empresa")
     @JsonManagedReference

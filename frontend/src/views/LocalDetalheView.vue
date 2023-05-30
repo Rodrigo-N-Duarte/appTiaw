@@ -10,8 +10,7 @@
           >
             <v-img
                 class="align-end text-white"
-                height="200"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                :src="empresa.imagem"
                 cover
             >
             </v-img>

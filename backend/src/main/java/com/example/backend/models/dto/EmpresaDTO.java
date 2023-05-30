@@ -17,4 +17,5 @@ public class EmpresaDTO implements Serializable {
     private String telefone;
     private String cnpj;
     private Double avaliacao;
+    private String imagem;
 }

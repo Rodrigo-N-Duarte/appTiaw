@@ -28,6 +28,9 @@ public class Item implements Serializable {
     private String nome;
     @Column
     private double preco;
+    @Column
+    @Lob
+    private String imagem;
     @ManyToOne
     @JoinColumn(name = "id_cardapio")
     private Cardapio cardapio;
