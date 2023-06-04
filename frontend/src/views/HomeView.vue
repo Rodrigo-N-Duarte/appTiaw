@@ -27,9 +27,6 @@
       <h1>Parece que não existem estabelecimentos parceiros 😢</h1>
     </v-col>
   </v-row>
-  <v-btn @click="mostrar">
-    mostrar
-  </v-btn>
 </v-container>
 </template>
 
@@ -62,10 +59,6 @@ export default defineComponent({
       let response = await fetch(url)
       let data = await response.json();
       this.empresas = data
-    },
-    mostrar(){
-      const authStore = useAuthStore()
-      console.log(authStore.user)
     }
   },
   computed: {

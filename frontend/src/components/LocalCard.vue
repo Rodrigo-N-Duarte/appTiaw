@@ -11,7 +11,7 @@
 
     <v-img
       cover
-      height="250"
+      :height="empresa.imagem ? empresa.imagem : 250"
       :src="empresa.imagem"
     ></v-img>
 

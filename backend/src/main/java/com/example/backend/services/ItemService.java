@@ -28,6 +28,9 @@ public class ItemService {
 
         itemRepository.save(novo);
     }
+    public void deletarItem(Long id) {
+        itemRepository.deleteById(id);
+    }
     public ItemDTO buscaPorId(Long id){
         ItemDTO dto = new ItemDTO();
         Item item = itemRepository.findById(id).get();

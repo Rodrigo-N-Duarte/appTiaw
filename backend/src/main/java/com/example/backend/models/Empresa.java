@@ -43,7 +43,6 @@ public class Empresa implements Serializable {
     @Column
     private Double avaliacao;
     @Column
-    @Lob
     private String imagem;
     @OneToMany
     @JoinColumn(name = "id_empresa")

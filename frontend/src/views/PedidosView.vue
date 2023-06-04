@@ -21,7 +21,7 @@
                     </v-card-item>
 
                     <v-card-actions>
-                        <v-btn variant="outlined">
+                        <v-btn variant="outlined" @click="() => excluirItem(i.id)">
                             Excluir
                         </v-btn>
                     </v-card-actions>
@@ -157,9 +157,17 @@ export default defineComponent({
                   console.log(this.pedido)
                 })
         },
-      mostra(){
-          console.log(this.dataDoPedido)
-          console.log(this.horaDoPedido)
+      async excluirItem(id) {
+          const idPedido = this.pedido.id
+          await fetch(`http://localhost:8080/pedido/${idPedido}/deletar-item/${id}`, {
+              method: "PUT",
+              headers: {
+                  "Content-Tpe": "application/json",
+              },
+          }).then(async ()=> {
+              alert("Item excluido do pedido!")
+              await this.buscarPedidoPorUsuario()
+          })
       },
       finalizarPedido(){
           if (!this.dataDoPedido || !this.horaDoPedido){

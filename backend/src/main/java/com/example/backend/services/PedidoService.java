@@ -36,6 +36,17 @@ public class PedidoService {
 
         pedidoRepository.save(novo);
     }
+    public void deletarItem(Long idPedido, Long idItem) {
+        Pedido pedido = pedidoRepository.findById(idPedido).get();
+        Set<Item> itens = pedido.getItens();
+        itens.forEach(item -> {
+            if (item.getId() == idItem) {
+                itens.remove(item);
+            }
+        });
+        pedido.setItens(itens);
+        pedidoRepository.save(pedido);
+    }
     public List<PedidoDTO> buscarPorUsuario(Long id){
         List<Pedido> pedidos = pedidoRepository.findAll();
         List<PedidoDTO> pedidosUsuario = new ArrayList<>();

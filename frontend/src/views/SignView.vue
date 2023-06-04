@@ -44,7 +44,7 @@
               </v-sheet>
             </v-col>
             <v-col cols="12" lg="5">
-              <v-img src="https://picsum.photos/seed/picsum/300/300" width="300"></v-img>
+                    <v-img :src="imagemLogin" width="500"></v-img>
             </v-col>
           </v-row>
         </v-container>
@@ -124,9 +124,9 @@
                       </v-sheet>
                     </v-col>
 
-                    <v-col cols="12" lg="6">
-                      <v-img src="https://picsum.photos/seed/picsum/300/300" width="300"></v-img>
-                    </v-col>
+                      <v-col cols="12" lg="6 ">
+                          <v-img :src="imagemSignUsuario" width="500"></v-img>
+                      </v-col>
                   </v-row>
                 </v-window-item>
 
@@ -135,6 +135,9 @@
                     :value="4"
                 >
                   <v-row>
+                      <v-col cols="12" lg="6 ">
+                          <v-img :src="imagemSignEmpresa" width="500"></v-img>
+                      </v-col>
                     <v-col cols="12" lg="6">
                       <v-sheet class="mx-auto">
                         <v-form ref="form">
@@ -168,8 +171,11 @@
                               label="CNPJ"
                               required
                           ></v-text-field>
-                          <v-file-input v-model="cadastroEmpresa.imagem" label="Imagem de capa"
-                                        variant="solo-filled"></v-file-input>
+                            <v-text-field
+                                    v-model="cadastroEmpresa.imagem"
+                                    label="Link de imagem de capa"
+                                    required
+                            ></v-text-field>
 
                           <div class="d-flex flex-column">
                             <v-btn
@@ -185,10 +191,6 @@
                       </v-sheet>
                     </v-col>
 
-                    <v-col cols="12" lg="6  ">
-                      <v-img src="https://picsum.photos/seed/picsum/300/300" width="300"></v-img>
-                    </v-col>
-
                   </v-row>
                 </v-window-item>
               </v-window>
@@ -197,8 +199,6 @@
         </v-row>
       </v-window-item>
     </v-window>
-    <v-btn @click="mostra">mostrar</v-btn>
-    <v-btn @click="authStore.user = null; authStore.tipoUsuario = null">null</v-btn>
   </div>
 </template>
 
@@ -230,6 +230,12 @@ export default {
       avaliacao: 0,
       imagem: null
     },
+      // eslint-disable-next-line no-undef
+      imagemLogin: require('@/assets/login.png'),
+      // eslint-disable-next-line no-undef
+      imagemSignUsuario: require('@/assets/signUsuario.png'),
+      // eslint-disable-next-line no-undef
+      imagemSignEmpresa: require('@/assets/signEmpresa.png'),
   }),
   methods: {
     async cadastraUsuario() {
@@ -266,7 +272,6 @@ export default {
         alert("Preencha todos os campos para continuar!")
         return
       }
-      this.cadastroEmpresa.imagem = (await this.fileToBase64(this.cadastroEmpresa.imagem[0])).toString()
       await fetch("http://localhost:8080/empresa/cadastrar", {
         method: "POST",
         headers: {
@@ -274,7 +279,7 @@ export default {
         },
         body: JSON.stringify(this.cadastroEmpresa)
       }).then(() => {
-        console.log("Empresa cadastrada com sucesso! Faça o login para continuar")
+        alert("Empresa cadastrada com sucesso! Faça o login para continuar")
         this.cadastroEmpresa.nome = null
         this.cadastroEmpresa.email = null
         this.cadastroEmpresa.senha = null
@@ -286,27 +291,6 @@ export default {
           .catch((error) => {
             console.log("erro: " + error)
           })
-    },
-
-    async fileToBase64(imageFile) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-          const base64String = reader.result;
-          resolve(base64String);
-        };
-
-        reader.onerror = (error) => {
-          reject(error);
-        };
-
-        reader.readAsDataURL(imageFile);
-      });
-    },
-
-    async mostra() {
-      console.log((await this.fileToBase64(this.cadastroEmpresa.imagem[0])).toString())
     },
 
     async fazerLogin() {

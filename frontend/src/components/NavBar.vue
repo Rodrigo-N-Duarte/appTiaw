@@ -3,7 +3,7 @@
     <v-container>
       <v-row style="margin-bottom: 20px">
         <v-col>
-          <v-img src="" width="100">logo</v-img>
+          <v-img :src="imagemLogo" width="100"></v-img>
         </v-col>
       </v-row>
       <v-row v-if="authStore.user">
@@ -74,13 +74,13 @@
 
       <v-divider></v-divider>
 
-      <v-container style="position: absolute; bottom: 0; left: 0">
+<!--      <v-container style="position: absolute; bottom: 0; left: 0">
         <v-btn
             :icon="theme"
             variant="default"
             @click="this.changeTheme"
         ></v-btn>
-      </v-container>
+      </v-container>-->
     </v-container>
   </v-container>
 </template>
@@ -145,7 +145,9 @@ export default {
           value: "login",
           href: "/sign",
         },
-      ]
+      ],
+        // eslint-disable-next-line no-undef
+        imagemLogo: require('@/assets/logo.png')
     };
   },
   methods: {

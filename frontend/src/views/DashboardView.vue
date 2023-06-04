@@ -60,7 +60,7 @@
                       class="mx-auto"
                       prepend-icon="mdi-circle-medium"
                   >
-                    <v-img :src="item.imagem"></v-img>
+                    <v-img :src="item.imagem" width="200"></v-img>
                     <template v-slot:title>
                       {{ item.nome }}
                     </template>
@@ -71,7 +71,9 @@
                     <v-card-text>
                       Número: {{ item.id }}
                     </v-card-text>
-                    <v-btn @click="">mostra</v-btn>
+                      <v-card-actions>
+                          <v-btn @click="() => excluirItem(item.id)" variant="outlined">Excluir item</v-btn>
+                      </v-card-actions>
                   </v-card>
                 </v-col>
               </v-row>
@@ -180,8 +182,11 @@
             <v-col cols="12">
               <v-row    justify="center"
                         no-gutters>
-                <v-file-input v-model="imagemNovoItem" label="Imagem de capa"
-                              variant="solo-filled"></v-file-input>
+                  <v-text-field
+                          v-model="imagemNovoItem"
+                          label="Imagem de capa do item"
+                          type="text"
+                  ></v-text-field>
               </v-row>
               <v-row
                   justify="center"
@@ -316,7 +321,6 @@ export default {
         alert("Preencha os dados corretamente!")
         return
       }
-      this.imagemNovoItem = (await this.fileToBase64(this.imagemNovoItem[0])).toString()
       const item = {
         nome: this.nomeNovoItem,
         preco: this.precoNovoItem,
@@ -338,23 +342,19 @@ export default {
             this.buscarItens()
           })
     },
-
-    async fileToBase64(imageFile) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-          const base64String = reader.result;
-          resolve(base64String);
-        };
-
-        reader.onerror = (error) => {
-          reject(error);
-        };
-
-        reader.readAsDataURL(imageFile);
-      });
-    },
+      async excluirItem(id) {
+          console.log(id)
+          await fetch(`http://localhost:8080/item/deletar/${id}`, {
+              method: 'DELETE',
+              headers: {
+                  "Content-Type": "application/json"
+              },
+          })
+              .then(()=> {
+                  alert("Item deletado com sucesso!")
+                  this.buscarItens()
+              })
+      }
   },
   async beforeMount() {
     await this.buscarEmpresa()

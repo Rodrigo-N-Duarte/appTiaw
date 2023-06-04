@@ -19,6 +19,11 @@ public class ItemController {
         itemService.adicionarItem(item);
     }
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/deletar/{id}")
+    public void deletarItem(@PathVariable("id") Long id){
+        itemService.deletarItem(id);
+    }
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/buscar-por-id/{id}")
     public ItemDTO buscaPorId(@PathVariable("id") Long id){
         return itemService.buscaPorId(id);
