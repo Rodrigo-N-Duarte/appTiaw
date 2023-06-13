@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import AboutView from "../views/AboutView.vue";
 import SignView from "../views/SignView.vue";
 import LocalDetalheView from "@/views/LocalDetalheView.vue";
 import PedidosView from "@/views/PedidosView.vue";
@@ -27,11 +26,6 @@ const routes = [
     path: "/reservas",
     name: "reservas",
     component: ReservasView,
-  },
-  {
-    path: "/about",
-    name: "about",
-    component: AboutView,
   },
   {
     path: "/sign",

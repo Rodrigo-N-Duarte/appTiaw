@@ -27,7 +27,7 @@ public class Reserva implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_mesa", referencedColumnName = "id")
     private Mesa mesa;
 }

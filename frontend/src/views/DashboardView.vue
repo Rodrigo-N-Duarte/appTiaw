@@ -135,6 +135,8 @@
           </v-row>
         </v-col>
         <v-col cols="12" lg="8">
+          <h2 class="mb-5" style="font-weight: 400">Mesas do estabelecimento: </h2>
+          <v-btn @click="dialogAdicionarNovaMesa = !dialogAdicionarNovaMesa" class="mb-5">Adicionar nova mesa</v-btn>
           <v-card class="pa-10" variant="elevated">
             <v-row>
               <v-col v-for="mesa in mesas" :key="mesa" cols="12" lg="4">
@@ -157,6 +159,7 @@
                   </v-card-text>
                 </v-card>
                 <v-btn @click="() => alterarDisponibilidade(mesa.id)">Alterar disponibilidade</v-btn>
+                <v-btn @click="() => excluirMesa(mesa.id)" color="red">Excluir</v-btn>
               </v-col>
             </v-row>
           </v-card>
@@ -228,6 +231,56 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog
+        v-model="dialogAdicionarNovaMesa"
+        width="500"
+    >
+      <template>
+        <v-btn
+            color="primary"
+        >
+          Adicionar nova mesa
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-text>
+          <v-card-subtitle>Informe os dados a seguir: </v-card-subtitle>
+          <v-row>
+            <v-col cols="12">
+              <v-row
+                  justify="center"
+                  no-gutters
+              >
+                <v-col cols="12" style="margin: 5px">
+                  <v-text-field
+                      v-model="numeroNovaMesa"
+                      label="Número"
+                      type="text"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              variant="text"
+              @click="dialogAdicionarNovaMesa = !dialogAdicionarNovaMesa"
+          >
+            Fechar
+          </v-btn>
+          <v-btn
+              color="green-darken-1"
+              variant="text"
+              @click="adicionarMesa"
+          >
+            Adicionar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -252,9 +305,11 @@ export default {
       pedidos: null,
       mesas: null,
       dialogAdicionarNovoItem: false,
+      dialogAdicionarNovaMesa: false,
       nomeNovoItem: null,
       precoNovoItem: null,
-      imagemNovoItem: null
+      imagemNovoItem: null,
+      numeroNovaMesa: null
     }
   },
   methods: {
@@ -295,6 +350,42 @@ export default {
             this.pedidos = data
           })
     },
+    async adicionarMesa() {
+      const authStore = useAuthStore()
+      const mesa = {
+        disponivel: true,
+        numero: this.numeroNovaMesa,
+        empresa: {
+          id: authStore.user.id
+        }
+      }
+      await fetch("http://localhost:8080/mesa/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(mesa)
+      })
+          .then(() => {
+            alert("Mesa cadastrada!")
+            this.buscarMesasPorEmpresa()
+            this.dialogAdicionarNovaMesa = !this.dialogAdicionarNovaMesa
+          })
+    },
+
+    async excluirMesa(id) {
+      await fetch(`http://localhost:8080/mesa/excluir/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+          .then(() => {
+            alert("Mesa excluida!")
+            this.buscarMesasPorEmpresa()
+          })
+    },
+
     async alterarDisponibilidade(id) {
       await fetch(`http://localhost:8080/mesa/alterar-disponibilidade/${id}`, {
         method: "PUT",

@@ -114,12 +114,6 @@ export default {
           href: "/reservas",
         },
         {
-          type: "mdi-message-bulleted",
-          name: "Sobre",
-          value: "sobre",
-          href: "/about",
-        },
-        {
           type: "mdi-lock",
           name: "Login",
           value: "login",
@@ -132,12 +126,6 @@ export default {
           name: "Dashboard",
           value: "dashboard",
           href: "/dashboard",
-        },
-        {
-          type: "mdi-message-bulleted",
-          name: "Sobre",
-          value: "sobre",
-          href: "/about",
         },
         {
           type: "mdi-lock",

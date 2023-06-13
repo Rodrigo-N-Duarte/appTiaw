@@ -32,6 +32,6 @@ public class Mesa implements Serializable {
     @JoinColumn(name = "id_empresa")
     @JsonBackReference
     private Empresa empresa;
-    @OneToOne(mappedBy = "mesa")
+    @OneToOne(mappedBy = "mesa", cascade = CascadeType.ALL)
     private Reserva reserva;
 }

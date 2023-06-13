@@ -268,7 +268,7 @@ export default {
         alert("Preencha todos os campos para continuar!")
         return
       }
-      if (!this.cadastroEmpresa.email || !this.cadastroEmpresa.senha) {
+      if (!this.cadastroEmpresa.email || !this.cadastroEmpresa.senha || !this.cadastroEmpresa.nome) {
         alert("Preencha todos os campos para continuar!")
         return
       }

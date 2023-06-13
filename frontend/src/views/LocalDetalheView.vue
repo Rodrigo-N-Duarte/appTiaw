@@ -207,7 +207,7 @@
                   <v-text-field
                       v-model="avaliar"
                       type="number"
-                      min="0"
+                      min="1"
                       max="5"
                       label="Avaliação *"
                       required
@@ -274,7 +274,7 @@ export default {
   },
   methods: {
     async avaliarEmpresa() {
-      if (!this.avaliar || this.avaliar < 0 || this.avaliar > 5) {
+      if (!this.avaliar || this.avaliar < 1 || this.avaliar > 5) {
         alert("Ocorreu um erro, confira o valor inserido")
         return
       }

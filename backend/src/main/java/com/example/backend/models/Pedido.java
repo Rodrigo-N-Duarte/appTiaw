@@ -32,7 +32,7 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_empresa")
     private Empresa empresa;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "tb_item_pedido",
             joinColumns = @JoinColumn(name = "pedido_fk"),
             inverseJoinColumns = @JoinColumn(name = "item_fk"))

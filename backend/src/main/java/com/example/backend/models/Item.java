@@ -34,6 +34,6 @@ public class Item implements Serializable {
     @JoinColumn(name = "id_cardapio")
     private Cardapio cardapio;
     @JsonIgnore
-    @ManyToMany(mappedBy = "itens")
+    @ManyToMany(mappedBy = "itens", cascade = CascadeType.ALL)
     private Set<Pedido> pedidos = new HashSet<>();
 }
